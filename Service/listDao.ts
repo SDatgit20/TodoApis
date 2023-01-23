@@ -1,5 +1,5 @@
-import { ToDoList } from "./TodoList";
-import { pool } from "./db.config";
+import { ToDoList } from "../Model/TodoList";
+import { pool } from "../db.config/db.config";
 
 export class listDao{
 

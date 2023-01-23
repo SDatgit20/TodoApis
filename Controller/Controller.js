@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
 exports.Controller = void 0;
-var listDao_1 = require("./listDao");
-var TodoList_1 = require("./TodoList");
+var listDao_1 = require("../Service/listDao");
+var TodoList_1 = require("../Model/TodoList");
 function Controller(app) {
     app.get('/todo/allList', function (req, res) {
         var listDaoObj = new listDao_1.listDao();

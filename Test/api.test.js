@@ -2,8 +2,8 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const request = require('supertest');
 const { app } = require('..');
-const { Controller } = require('../Controller');
-const { pool } = require('../db.config');
+const { Controller } = require('../Controller/Controller');
+const { pool } = require('../db.config/db.config');
 var expect = chai.expect;
 Controller(app);
 

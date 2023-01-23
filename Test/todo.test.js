@@ -2,9 +2,9 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const request = require('supertest');
 const { app } = require('..');
-const { TaskController } = require('../taskController');
-const { Controller } = require('../Controller');
-const { pool } = require('../db.config');
+const { TaskController } = require('../Controller/taskController');
+const { Controller } = require('../Controller/Controller');
+const { pool } = require('../db.config/db.config');
 var expect = chai.expect;
 TaskController(app);
 Controller(app);
@@ -73,15 +73,15 @@ describe('Testing task controller API endpoint', function () {
       })
   });
   
-    // it("Test Delete Request", function(done) {
-    //   request(app)
-    //   .delete('/todo/task/24')
-    //   .end(function (err, res) {
-    //       if (err) done(err);
-    //       expect(res.status).to.equal(200);
-    //       expect(res.text).to.equal("Deleted successfully");
-    //       done()
-    //   })
-    // });
+    it("Test Delete Request", function(done) {
+      request(app)
+      .delete('/todo/task/24')
+      .end(function (err, res) {
+          if (err) done(err);
+          expect(res.status).to.equal(200);
+          expect(res.text).to.equal("Deleted successfully");
+          done()
+      })
+    });
     after(function(done){pool.query("drop table todotask"); done()});
   });

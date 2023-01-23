@@ -1,5 +1,5 @@
-import { taskDao } from "./taskDao";
-import { ToDoTask } from "./todoTask";
+import { taskDao } from "../Service/taskDao";
+import { ToDoTask } from "../Model/todoTask";
 
 export function TaskController(app){
     const taskDaoObj = new taskDao();

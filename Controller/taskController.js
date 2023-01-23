@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
 exports.TaskController = void 0;
-var taskDao_1 = require("./taskDao");
-var todoTask_1 = require("./todoTask");
+var taskDao_1 = require("../Service/taskDao");
+var todoTask_1 = require("../Model/todoTask");
 function TaskController(app) {
     var taskDaoObj = new taskDao_1.taskDao();
     app.get('/todo/list/:listid', function (req, res) {

@@ -1,5 +1,5 @@
-import { listDao } from "./listDao";
-import { ToDoList } from "./TodoList";
+import { listDao } from "../Service/listDao";
+import { ToDoList } from "../Model/TodoList";
 
 export function Controller(app){
     app.get('/todo/allList',function(req,res){
