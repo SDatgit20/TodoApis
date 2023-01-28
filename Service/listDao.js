@@ -47,48 +47,64 @@ var listDao = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (listObj.getName() == undefined || listObj.getName().trim() == "")
+                            return [2 /*return*/, "Empty"];
+                        return [4 /*yield*/, this.findListByName(listObj.getName())];
+                    case 1:
+                        if ((_a.sent()) == -1)
+                            return [2 /*return*/, "Duplicate"];
                         query = "INSERT INTO todolists values(" + listObj.getId() + ",'" + listObj.getName() + "')";
                         console.log(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
-                    case 1:
+                    case 2:
                         now = _a.sent();
-                        return [2 /*return*/];
+                        return [2 /*return*/, "List added: " + listObj.getId() + " " + listObj.getName()];
                 }
             });
         });
     };
     listDao.prototype["delete"] = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, queryTodo;
+            var listItem, query, queryTodo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
+                    case 0: return [4 /*yield*/, this.getListById(id)];
+                    case 1:
+                        listItem = _a.sent();
+                        if (listItem == undefined)
+                            return [2 /*return*/, -1];
                         query = "DELETE FROM todolists WHERE id =" + id;
                         queryTodo = "DELETE FROM todotask WHERE list_id =" + id;
                         console.log(query);
                         return [4 /*yield*/, db_config_1.pool.query(queryTodo)];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 2:
                         _a.sent();
-                        return [2 /*return*/];
+                        return [4 /*yield*/, db_config_1.pool.query(query)];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/, "Task deleted successfully"];
                 }
             });
         });
     };
     listDao.prototype.edit = function (listObj) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, now;
+            var query;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (listObj.getName() == undefined || listObj.getName().trim() == "")
+                            return [2 /*return*/, "Empty"];
+                        return [4 /*yield*/, this.getListById(listObj.getId())];
+                    case 1:
+                        if ((_a.sent()) == undefined)
+                            return [2 /*return*/, "NA"];
                         query = "UPDATE todolists SET  name='" + listObj.getName() + "' where id=" + listObj.getId();
                         console.log(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
-                    case 1:
-                        now = _a.sent();
-                        return [2 /*return*/];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, "Task edited!"];
                 }
             });
         });
@@ -99,7 +115,7 @@ var listDao = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "SELECT * from todolists" + " where id=" + id;
+                        query = "SELECT * from todolists where id=" + id;
                         console.log(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
@@ -122,7 +138,28 @@ var listDao = /** @class */ (function () {
                     case 1:
                         now = _a.sent();
                         arr = now.rows;
+                        if (arr.length == 0)
+                            return [2 /*return*/, "No list to show"];
                         return [2 /*return*/, arr];
+                }
+            });
+        });
+    };
+    listDao.prototype.findListByName = function (name) {
+        return __awaiter(this, void 0, void 0, function () {
+            var query, now, arr;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = "SELECT * from todolists where name= '" + name + "'";
+                        console.log(query);
+                        return [4 /*yield*/, db_config_1.pool.query(query)];
+                    case 1:
+                        now = _a.sent();
+                        arr = now.rows;
+                        if (arr.length > 0)
+                            return [2 /*return*/, -1];
+                        return [2 /*return*/, 0];
                 }
             });
         });

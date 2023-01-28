@@ -1,35 +1,35 @@
-export class ToDoTask{
-    private id:number;
-    private description:String;
-    private status:String="Pending";
-    private list_id:number;
+export class ToDoTask {
+    private id: number;
+    private description: String;
+    private status: String = "Pending";
+    private list_id: number;
 
 
-    constructor(description:String,list_id:number){
-        this.description=description;
-        this.list_id=list_id;
+    constructor(description: String, list_id: number) {
+        this.description = description;
+        this.list_id = list_id;
     }
 
-    public setDescription(description:string){
-        this.description=description;
-    }
-   
-    public setStatus(status:string){
-        this.status=status;
+    public setDescription(description: string) {
+        this.description = description;
     }
 
-    public getId():number{
+    public setStatus(status: string) {
+        this.status = status;
+    }
+
+    public getId(): number {
         return this.id;
     }
-    public getDescription():String{
+    public getDescription(): String {
         return this.description;
     }
 
-    public getStatus():String{
+    public getStatus(): String {
         return this.status;
     }
 
-    public getlistId():number{
+    public getlistId(): number {
         return this.list_id;
     }
 }

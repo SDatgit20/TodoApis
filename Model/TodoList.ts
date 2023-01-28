@@ -1,21 +1,21 @@
-export class ToDoList{
-    private id:number;
-    private name:String;
+export class ToDoList {
+    private id: number;
+    private name: String;
 
-    constructor(id:number,name:String){
-        this.id=id;
-        this.name=name;
+    constructor(id: number, name: String) {
+        this.id = id;
+        this.name = name;
     }
 
-    public setName(name:string){
-        this.name=name;
+    public setName(name: string) {
+        this.name = name;
     }
-   
 
-    public getId():number{
+
+    public getId(): number {
         return this.id;
     }
-    public getName():String{
+    public getName(): String {
         return this.name;
     }
 }
