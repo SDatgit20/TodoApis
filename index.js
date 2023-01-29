@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.app = void 0;
+var router_1 = require("./router");
 var express = require('express');
 exports.app = express();
 var port = 3000;
@@ -12,3 +13,4 @@ exports.app.get('/', function (req, res) {
 exports.app.listen(port, function () {
     console.log("Example app listening at http://localhost:".concat(port));
 });
+(0, router_1["default"])(exports.app);

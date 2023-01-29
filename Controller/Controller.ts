@@ -2,16 +2,16 @@ import { listDao } from "../Service/listDao";
 import { ToDoList } from "../Model/TodoList";
 import { logger } from "../Logger/logger";
 
-export function Controller(app) {
-    app.get('/todolist', function (req, res) {
-        const listDaoObj = new listDao();
-        listDaoObj.getAllList().then((r) => {
-            console.log(r);
-            res.send(JSON.stringify(r));
-        })
-    })
-    app.get('/todolist/:listid', function (req, res) {
-        const listDaoObj = new listDao();
+export const getAllTodoLists = (req, res) => {
+    const listDaoObj = new listDao();
+            listDaoObj.getAllList().then((r) => {
+                console.log(r);
+                res.send(JSON.stringify(r));
+            })
+};
+
+export const getTodoListById = (req, res) => {
+    const listDaoObj = new listDao();
         listDaoObj.getListById(req.params.listid).then((r) => {
             if (r === undefined) {
                 const msg = "List not found for given id";
@@ -22,21 +22,9 @@ export function Controller(app) {
             }
             res.send(JSON.stringify(r));
         })
-    })
-    app.delete('/todolist/:listid', function (req, res) {
-        const listDaoObj = new listDao();
-        listDaoObj.delete(req.params.listid).then((r) => {
-            if (r == -1) {
-                const msg = "List not found for given id";
-                logger.error(msg + " " + req.params.listid);
-                res.status(404);
-                res.send(msg);
-                return;
-            }
-            res.send(r);
-        })
-    })
-    app.post('/todolist', function (req, res) {
+};
+
+export const createNewTodoList = (req, res) => {
         const id = req.body.id;
         const name = req.body.name;
         var todoListObj = new ToDoList(id, name);
@@ -65,8 +53,23 @@ export function Controller(app) {
             }
             res.status(201).send(r);
         });
-    })
-    app.put('/todolist', function (req, res) {
+};
+
+export const deleteTodoListById = (req, res) => {
+        const listDaoObj = new listDao();
+        listDaoObj.delete(req.params.listid).then((r) => {
+            if (r == -1) {
+                const msg = "List not found for given id";
+                logger.error(msg + " " + req.params.listid);
+                res.status(404);
+                res.send(msg);
+                return;
+            }
+            res.send(r);
+        })
+};
+
+export const updateTodoList = (req, res) => {
         const id = req.body.id;
         const name = req.body.name;
         var todoListObj = new ToDoList(id, name);
@@ -88,6 +91,4 @@ export function Controller(app) {
             }
             res.send(r);
         });
-
-    })
-}
+};
