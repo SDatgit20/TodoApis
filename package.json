@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc runner.ts && node runner.js",
+    "start": "tsc index.ts && node index.js",
     "test": "mocha --exit --recursive --timeout 5000"
   },
   "author": "",
