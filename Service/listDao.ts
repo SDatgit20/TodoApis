@@ -9,9 +9,12 @@ export class listDao {
             return "Empty";
         if (await this.findListByName(listObj.getName()) == -1)
             return "Duplicate";
+        if(await this.getListById(listObj.getId())!=undefined){
+        return "Duplicate id";
+        }
         const query = "INSERT INTO todolists values(" + listObj.getId() + ",'" + listObj.getName() + "')";
         logger.info(query);
-        const now = await pool.query(query);
+        await pool.query(query);
         return "List added: " + listObj.getId() + " " + listObj.getName();
     }
 
@@ -24,7 +27,7 @@ export class listDao {
         logger.info(query);
         await pool.query(queryTodo);
         await pool.query(query);
-        return "Task deleted successfully";
+        return "List deleted successfully";
     }
 
     public async edit(listObj: ToDoList) {

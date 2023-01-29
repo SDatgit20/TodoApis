@@ -17,6 +17,7 @@ describe("List Service Unit Tests", function () {
             const postgreeStubQuery = sinon.stub(pgPool.prototype, 'query');
             const listDaoObj = new listDao();
             sinon.stub(listDao.prototype, "findListByName").returns(0);
+            sinon.stub(listDao.prototype, "getListById").returns(undefined);
 
             const returnedUser = await listDaoObj.create(list);
 
@@ -47,7 +48,7 @@ describe("List Service Unit Tests", function () {
             const returnedUser = await listDaoObj.delete(id);
 
             expect(postgreeStubQuery.calledWith("DELETE FROM todolists WHERE id =" + id)).to.equal(true);
-            expect(returnedUser).to.equal("Task deleted successfully");
+            expect(returnedUser).to.equal("List deleted successfully");
         });
 
         it("should not run delete query when given id does not exist", async function () {
@@ -121,8 +122,6 @@ describe("List Service Unit Tests", function () {
 
             const returnedUser = await listDaoObj.getAllList();
 
-            console.log(returnedUser);
-
             expect(postgreeStubQuery.calledWith("SELECT * from todolists")).to.equal(true);
             expect(returnedUser).to.be.a('array');
         });
@@ -132,8 +131,6 @@ describe("List Service Unit Tests", function () {
             const postgreeStubQuery = sinon.stub(pgPool.prototype, 'query').returns({ rows: [] });
 
             const returnedUser = await listDaoObj.getAllList();
-
-            console.log(returnedUser);
 
             expect(postgreeStubQuery.calledWith("SELECT * from todolists")).to.equal(true);
             expect(returnedUser).to.equal("No list to show");

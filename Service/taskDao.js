@@ -44,23 +44,29 @@ var taskDao = /** @class */ (function () {
     }
     taskDao.prototype.createTodo = function (todoObj) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, now;
+            var query;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (todoObj.getDescription() == undefined || todoObj.getDescription() == "")
+                            return [2 /*return*/, "Description empty"];
+                        return [4 /*yield*/, this.findTaskByName(todoObj.getDescription(), todoObj.getlistId())];
+                    case 1:
+                        if ((_a.sent()) == -1)
+                            return [2 /*return*/, "Duplicate"];
                         query = "INSERT INTO todotask (list_id,description,status) values(" + todoObj.getlistId() + ",'" + todoObj.getDescription() + "','" + todoObj.getStatus() + "')";
                         logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
-                    case 1:
-                        now = _a.sent();
-                        return [2 /*return*/];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/, "Task added: " + todoObj.getId() + " " + todoObj.getDescription()];
                 }
             });
         });
     };
     taskDao.prototype.deleteTodo = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, now;
+            var query;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -68,24 +74,26 @@ var taskDao = /** @class */ (function () {
                         logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
-                        now = _a.sent();
-                        return [2 /*return*/];
+                        _a.sent();
+                        return [2 /*return*/, "Task deleted successfully"];
                 }
             });
         });
     };
     taskDao.prototype.editTodo = function (id, description) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, now;
+            var query;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (description == undefined || description.trim() == "")
+                            return [2 /*return*/, "Description empty"];
                         query = "UPDATE todotask SET  description='" + description + "' where todo_id=" + id;
                         logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
-                        now = _a.sent();
-                        return [2 /*return*/];
+                        _a.sent();
+                        return [2 /*return*/, "Task edited"];
                 }
             });
         });
@@ -106,13 +114,13 @@ var taskDao = /** @class */ (function () {
             });
         });
     };
-    taskDao.prototype.getAllPendingTasks = function (id) {
+    taskDao.prototype.getAllPendingTasks = function () {
         return __awaiter(this, void 0, void 0, function () {
             var query, now, arr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "SELECT * from todotask where status like 'Pending' and list_id=" + id;
+                        query = "SELECT * from todotask where status like 'Pending'";
                         logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
@@ -123,13 +131,13 @@ var taskDao = /** @class */ (function () {
             });
         });
     };
-    taskDao.prototype.getAllCompletedTasks = function (id) {
+    taskDao.prototype.getAllCompletedTasks = function () {
         return __awaiter(this, void 0, void 0, function () {
             var query, now, arr;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        query = "SELECT * from todotask where status like 'Completed' and list_id=" + id;
+                        query = "SELECT * from todotask where status like 'Completed' ";
                         logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
@@ -170,6 +178,25 @@ var taskDao = /** @class */ (function () {
                         now = _a.sent();
                         arr = now.rows;
                         return [2 /*return*/, arr];
+                }
+            });
+        });
+    };
+    taskDao.prototype.findTaskByName = function (name, id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var query, now, arr;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = "SELECT * from todotask where description= '" + name + "' and list_id=" + id;
+                        logger_1.logger.info(query);
+                        return [4 /*yield*/, db_config_1.pool.query(query)];
+                    case 1:
+                        now = _a.sent();
+                        arr = now.rows;
+                        if (arr.length > 0)
+                            return [2 /*return*/, -1];
+                        return [2 /*return*/, 0];
                 }
             });
         });

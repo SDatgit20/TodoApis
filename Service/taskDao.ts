@@ -5,21 +5,30 @@ import { logger } from "../Logger/logger";
 export class taskDao {
 
     public async createTodo(todoObj: ToDoTask) {
+        if (todoObj.getDescription() == undefined|| todoObj.getDescription() == "")
+            return "Description empty";
+        if (await this.findTaskByName(todoObj.getDescription(), todoObj.getlistId()) == -1)
+            return "Duplicate";
         const query = "INSERT INTO todotask (list_id,description,status) values(" + todoObj.getlistId() + ",'" + todoObj.getDescription() + "','" + todoObj.getStatus() + "')";
         logger.info(query);
-        const now = await pool.query(query);
+        await pool.query(query);
+        return "Task added: " + todoObj.getId() + " " + todoObj.getDescription();
     }
 
     public async deleteTodo(id: number) {
         const query = "DELETE FROM todotask WHERE todo_id =" + id;
         logger.info(query);
-        const now = await pool.query(query);
+        await pool.query(query);
+        return "Task deleted successfully";
     }
 
     public async editTodo(id: number, description: string) {
+        if (description == undefined || description.trim() == "")
+        return "Description empty";
         const query = "UPDATE todotask SET  description='" + description + "' where todo_id=" + id;
         logger.info(query);
-        const now = await pool.query(query);
+        await pool.query(query);
+        return "Task edited";
     }
 
     public async changeStatus(id: number) {
@@ -28,16 +37,16 @@ export class taskDao {
         const now = await pool.query(query);
     }
 
-    public async getAllPendingTasks(id: number) {
-        const query = "SELECT * from todotask where status like 'Pending' and list_id=" + id;
+    public async getAllPendingTasks() {
+        const query = "SELECT * from todotask where status like 'Pending'";
         logger.info(query);
         const now = await pool.query(query);
         const arr: ToDoTask[] = now.rows;
         return arr;
     }
 
-    public async getAllCompletedTasks(id: number) {
-        var query = "SELECT * from todotask where status like 'Completed' and list_id=" + id;
+    public async getAllCompletedTasks() {
+        var query = "SELECT * from todotask where status like 'Completed' ";
         logger.info(query);
         const now = await pool.query(query);
         var arr: ToDoTask[] = now.rows;
@@ -58,5 +67,15 @@ export class taskDao {
         const now = await pool.query(query);
         const arr: ToDoTask[] = now.rows;
         return arr;
+    }
+
+    public async findTaskByName(name: String, id: number) {
+        const query = "SELECT * from todotask where description= '" + name + "' and list_id=" + id;
+        logger.info(query);
+        const now = await pool.query(query);
+        const arr: ToDoTask[] = now.rows;
+        if (arr.length > 0)
+            return -1;
+        return 0;
     }
 }

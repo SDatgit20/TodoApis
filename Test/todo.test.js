@@ -12,7 +12,7 @@ Controller(app);
 describe('Testing task controller API endpoint', function () {
   before(function () {
     request(app)
-      .post('/todo/')
+      .post('/todolist/')
       .send({
         id: 2,
         name: "Abcd",
@@ -24,7 +24,7 @@ describe('Testing task controller API endpoint', function () {
   })
   it("Test Post Request", function (done) {
     request(app)
-      .post('/todo/task/')
+      .post('/todolist/task')
       .send({
         description: "Abcd",
         list_id: 2
@@ -39,7 +39,7 @@ describe('Testing task controller API endpoint', function () {
   it("Test Get Request", function (done) {
 
     request(app)
-      .get('/todo/task/1')
+      .get('/todolist/task/1')
       .end(function (err, res) {
         if (err) done(err);
         expect(res.status).to.equal(200);
@@ -51,7 +51,7 @@ describe('Testing task controller API endpoint', function () {
   it("Test toggle Request", function (done) {
 
     request(app)
-      .get('/todo/toggleTask/1')
+      .get('/todolist/toggleTask/1')
       .end(function (err, res) {
         if (err) done(err);
         expect(res.status).to.equal(200);
@@ -61,7 +61,7 @@ describe('Testing task controller API endpoint', function () {
 
   it("Test Put Request", function (done) {
     request(app)
-      .put('/todo/edit')
+      .put('/todolist/task')
       .send({
         id: 1,
         description: "Test",
@@ -75,7 +75,7 @@ describe('Testing task controller API endpoint', function () {
 
   it("Test Delete Request", function (done) {
     request(app)
-      .delete('/todo/task/24')
+      .delete('/todolist/task/24')
       .end(function (err, res) {
         if (err) done(err);
         expect(res.status).to.equal(200);

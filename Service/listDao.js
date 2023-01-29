@@ -44,7 +44,7 @@ var listDao = /** @class */ (function () {
     }
     listDao.prototype.create = function (listObj) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, now;
+            var query;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -54,11 +54,16 @@ var listDao = /** @class */ (function () {
                     case 1:
                         if ((_a.sent()) == -1)
                             return [2 /*return*/, "Duplicate"];
+                        return [4 /*yield*/, this.getListById(listObj.getId())];
+                    case 2:
+                        if ((_a.sent()) != undefined) {
+                            return [2 /*return*/, "Duplicate id"];
+                        }
                         query = "INSERT INTO todolists values(" + listObj.getId() + ",'" + listObj.getName() + "')";
                         logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
-                    case 2:
-                        now = _a.sent();
+                    case 3:
+                        _a.sent();
                         return [2 /*return*/, "List added: " + listObj.getId() + " " + listObj.getName()];
                 }
             });
@@ -83,7 +88,7 @@ var listDao = /** @class */ (function () {
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 3:
                         _a.sent();
-                        return [2 /*return*/, "Task deleted successfully"];
+                        return [2 /*return*/, "List deleted successfully"];
                 }
             });
         });

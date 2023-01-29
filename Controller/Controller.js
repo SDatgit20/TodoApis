@@ -5,14 +5,14 @@ var listDao_1 = require("../Service/listDao");
 var TodoList_1 = require("../Model/TodoList");
 var logger_1 = require("../Logger/logger");
 function Controller(app) {
-    app.get('/todo/allList', function (req, res) {
+    app.get('/todolist', function (req, res) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj.getAllList().then(function (r) {
             console.log(r);
             res.send(JSON.stringify(r));
         });
     });
-    app.get('/todo/:listid', function (req, res) {
+    app.get('/todolist/:listid', function (req, res) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj.getListById(req.params.listid).then(function (r) {
             if (r === undefined) {
@@ -25,7 +25,7 @@ function Controller(app) {
             res.send(JSON.stringify(r));
         });
     });
-    app["delete"]('/todo/:listid', function (req, res) {
+    app["delete"]('/todolist/:listid', function (req, res) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj["delete"](req.params.listid).then(function (r) {
             if (r == -1) {
@@ -38,7 +38,7 @@ function Controller(app) {
             res.send(r);
         });
     });
-    app.post('/todo/', function (req, res) {
+    app.post('/todolist', function (req, res) {
         var id = req.body.id;
         var name = req.body.name;
         var todoListObj = new TodoList_1.ToDoList(id, name);
@@ -58,10 +58,17 @@ function Controller(app) {
                 res.send(msg);
                 return;
             }
+            else if (r == "Duplicate id") {
+                var msg = "Id " + id + " already exists";
+                logger_1.logger.error(msg);
+                res.status(400);
+                res.send(msg);
+                return;
+            }
             res.status(201).send(r);
         });
     });
-    app.put('/todo/', function (req, res) {
+    app.put('/todolist', function (req, res) {
         var id = req.body.id;
         var name = req.body.name;
         var todoListObj = new TodoList_1.ToDoList(id, name);

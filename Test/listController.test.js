@@ -10,11 +10,11 @@ Controller(app);
 describe('Testing list controller API endpoint', function () {
   before(async () => {
     await pool.query("delete from todolists");
-    await pool.query("Create table todotask(todo_id int generated always as identity,list_id int,description varchar(200) not null,status varchar(50),Primary key(todo_id),Constraint fk_list Foreign key(list_id) References todolists(id))")
+    await pool.query("Create table if not exists todotask(todo_id int generated always as identity,list_id int,description varchar(200) not null,status varchar(50),Primary key(todo_id),Constraint fk_list Foreign key(list_id) References todolists(id))")
   });
   it("Test Post Request", function (done) {
     request(app)
-      .post('/todo/')
+      .post('/todolist')
       .send({
         id: 1,
         name: "Abcd",
@@ -29,7 +29,7 @@ describe('Testing list controller API endpoint', function () {
   it("Test Get all list Request", function (done) {
 
     request(app)
-      .get('/todo/allList')
+      .get('/todolist')
       .end(function (err, res) {
         if (err) done(err);
         expect(res.status).to.equal(200);
@@ -41,7 +41,7 @@ describe('Testing list controller API endpoint', function () {
   it("Test Get list by id Request", function (done) {
 
     request(app)
-      .get('/todo/1')
+      .get('/todolist/1')
       .end(function (err, res) {
         if (err) done(err);
         expect(res.status).to.equal(200);
@@ -51,18 +51,13 @@ describe('Testing list controller API endpoint', function () {
 
   it("Test Delete list Request", function (done) {
     request(app)
-      .delete('/todo/1')
+      .delete('/todolist/1')
       .end(function (err, res) {
         if (err) done(err);
         expect(res.status).to.equal(200);
-        expect(res.text).to.equal("Task deleted successfully");
+        expect(res.text).to.equal("List deleted successfully");
         done()
       })
   });
 
 });
-
-
-
-
-

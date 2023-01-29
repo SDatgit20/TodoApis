@@ -3,14 +3,14 @@ import { ToDoList } from "../Model/TodoList";
 import { logger } from "../Logger/logger";
 
 export function Controller(app) {
-    app.get('/todo/allList', function (req, res) {
+    app.get('/todolist', function (req, res) {
         const listDaoObj = new listDao();
         listDaoObj.getAllList().then((r) => {
             console.log(r);
             res.send(JSON.stringify(r));
         })
     })
-    app.get('/todo/:listid', function (req, res) {
+    app.get('/todolist/:listid', function (req, res) {
         const listDaoObj = new listDao();
         listDaoObj.getListById(req.params.listid).then((r) => {
             if (r === undefined) {
@@ -23,7 +23,7 @@ export function Controller(app) {
             res.send(JSON.stringify(r));
         })
     })
-    app.delete('/todo/:listid', function (req, res) {
+    app.delete('/todolist/:listid', function (req, res) {
         const listDaoObj = new listDao();
         listDaoObj.delete(req.params.listid).then((r) => {
             if (r == -1) {
@@ -36,7 +36,7 @@ export function Controller(app) {
             res.send(r);
         })
     })
-    app.post('/todo/', function (req, res) {
+    app.post('/todolist', function (req, res) {
         const id = req.body.id;
         const name = req.body.name;
         var todoListObj = new ToDoList(id, name);
@@ -56,10 +56,17 @@ export function Controller(app) {
                 res.send(msg);
                 return;
             }
+            else if (r == "Duplicate id") {
+                const msg = "Id" + id + "already exists";
+                logger.error(msg);
+                res.status(400);
+                res.send(msg);
+                return;
+            }
             res.status(201).send(r);
         });
     })
-    app.put('/todo/', function (req, res) {
+    app.put('/todolist', function (req, res) {
         const id = req.body.id;
         const name = req.body.name;
         var todoListObj = new ToDoList(id, name);
