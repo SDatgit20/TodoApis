@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.listDao = void 0;
 var db_config_1 = require("../db.config/db.config");
+var logger_1 = require("../Logger/logger");
 var listDao = /** @class */ (function () {
     function listDao() {
     }
@@ -54,7 +55,7 @@ var listDao = /** @class */ (function () {
                         if ((_a.sent()) == -1)
                             return [2 /*return*/, "Duplicate"];
                         query = "INSERT INTO todolists values(" + listObj.getId() + ",'" + listObj.getName() + "')";
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 2:
                         now = _a.sent();
@@ -75,7 +76,7 @@ var listDao = /** @class */ (function () {
                             return [2 /*return*/, -1];
                         query = "DELETE FROM todolists WHERE id =" + id;
                         queryTodo = "DELETE FROM todotask WHERE list_id =" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(queryTodo)];
                     case 2:
                         _a.sent();
@@ -100,7 +101,7 @@ var listDao = /** @class */ (function () {
                         if ((_a.sent()) == undefined)
                             return [2 /*return*/, "NA"];
                         query = "UPDATE todolists SET  name='" + listObj.getName() + "' where id=" + listObj.getId();
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 2:
                         _a.sent();
@@ -116,7 +117,7 @@ var listDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todolists where id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -133,7 +134,7 @@ var listDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todolists";
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -152,7 +153,7 @@ var listDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todolists where name= '" + name + "'";
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();

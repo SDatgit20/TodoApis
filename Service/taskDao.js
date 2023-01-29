@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.taskDao = void 0;
 var db_config_1 = require("../db.config/db.config");
+var logger_1 = require("../Logger/logger");
 var taskDao = /** @class */ (function () {
     function taskDao() {
     }
@@ -48,7 +49,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "INSERT INTO todotask (list_id,description,status) values(" + todoObj.getlistId() + ",'" + todoObj.getDescription() + "','" + todoObj.getStatus() + "')";
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -64,7 +65,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "DELETE FROM todotask WHERE todo_id =" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -80,7 +81,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "UPDATE todotask SET  description='" + description + "' where todo_id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -96,7 +97,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "UPDATE todotask SET  status= case status when 'Pending' then 'Completed' when 'Completed' then 'Pending' end" + " where todo_id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -112,7 +113,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todotask where status like 'Pending' and list_id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -129,7 +130,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todotask where status like 'Completed' and list_id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -146,7 +147,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todotask" + " where todo_id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();
@@ -163,7 +164,7 @@ var taskDao = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         query = "SELECT * from todotask" + " where list_id=" + id;
-                        console.log(query);
+                        logger_1.logger.info(query);
                         return [4 /*yield*/, db_config_1.pool.query(query)];
                     case 1:
                         now = _a.sent();

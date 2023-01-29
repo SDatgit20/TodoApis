@@ -3,6 +3,7 @@ exports.__esModule = true;
 exports.Controller = void 0;
 var listDao_1 = require("../Service/listDao");
 var TodoList_1 = require("../Model/TodoList");
+var logger_1 = require("../Logger/logger");
 function Controller(app) {
     app.get('/todo/allList', function (req, res) {
         var listDaoObj = new listDao_1.listDao();
@@ -15,8 +16,10 @@ function Controller(app) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj.getListById(req.params.listid).then(function (r) {
             if (r === undefined) {
+                var msg = "List not found for given id";
+                logger_1.logger.error(msg + " " + req.params.listid);
                 res.status(404);
-                res.send("List not found for given id");
+                res.send(msg);
                 return;
             }
             res.send(JSON.stringify(r));
@@ -26,8 +29,10 @@ function Controller(app) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj["delete"](req.params.listid).then(function (r) {
             if (r == -1) {
+                var msg = "List not found for given id";
+                logger_1.logger.error(msg + " " + req.params.listid);
                 res.status(404);
-                res.send("List not found for given id");
+                res.send(msg);
                 return;
             }
             res.send(r);
@@ -40,13 +45,17 @@ function Controller(app) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj.create(todoListObj).then(function (r) {
             if (r == "Empty") {
+                var msg = "Name cannot be empty";
+                logger_1.logger.error("Attempt to create list with empty name");
                 res.status(400);
-                res.send("Name cannot be empty");
+                res.send(msg);
                 return;
             }
             else if (r == "Duplicate") {
+                var msg = "Name" + name + "already exists";
+                logger_1.logger.error(msg);
                 res.status(400);
-                res.send("Name already exists");
+                res.send(msg);
                 return;
             }
             res.status(201).send(r);
@@ -59,13 +68,17 @@ function Controller(app) {
         var listDaoObj = new listDao_1.listDao();
         listDaoObj.edit(todoListObj).then(function (r) {
             if (r == "NA") {
+                var msg = "List with given id" + id + " not exist";
                 res.status(400);
-                res.send("List with given id not exist");
+                res.send(msg);
+                logger_1.logger.error(msg);
                 return;
             }
             else if (r == "Empty") {
+                var msg = "Name cannot be empty";
+                logger_1.logger.error("Attempt to create list with empty name");
                 res.status(400);
-                res.send("Name cannot be empty");
+                res.send(msg);
                 return;
             }
             res.send(r);

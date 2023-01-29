@@ -1,6 +1,6 @@
 import { listDao } from "../Service/listDao";
 import { ToDoList } from "../Model/TodoList";
-import { pool } from "../db.config/db.config";
+import { logger } from "../Logger/logger";
 
 export function Controller(app) {
     app.get('/todo/allList', function (req, res) {
@@ -14,8 +14,10 @@ export function Controller(app) {
         const listDaoObj = new listDao();
         listDaoObj.getListById(req.params.listid).then((r) => {
             if (r === undefined) {
+                const msg = "List not found for given id";
+                logger.error(msg + " " + req.params.listid);
                 res.status(404);
-                res.send("List not found for given id");
+                res.send(msg);
                 return;
             }
             res.send(JSON.stringify(r));
@@ -25,8 +27,10 @@ export function Controller(app) {
         const listDaoObj = new listDao();
         listDaoObj.delete(req.params.listid).then((r) => {
             if (r == -1) {
+                const msg = "List not found for given id";
+                logger.error(msg + " " + req.params.listid);
                 res.status(404);
-                res.send("List not found for given id");
+                res.send(msg);
                 return;
             }
             res.send(r);
@@ -39,13 +43,17 @@ export function Controller(app) {
         const listDaoObj = new listDao();
         listDaoObj.create(todoListObj).then((r) => {
             if (r == "Empty") {
+                const msg = "Name cannot be empty";
+                logger.error("Attempt to create list with empty name");
                 res.status(400);
-                res.send("Name cannot be empty");
+                res.send(msg);
                 return;
             }
             else if (r == "Duplicate") {
+                const msg = "Name" + name + "already exists";
+                logger.error(msg);
                 res.status(400);
-                res.send("Name already exists");
+                res.send(msg);
                 return;
             }
             res.status(201).send(r);
@@ -57,14 +65,18 @@ export function Controller(app) {
         var todoListObj = new ToDoList(id, name);
         const listDaoObj = new listDao();
         listDaoObj.edit(todoListObj).then((r) => {
-            if (r =="NA") {
+            if (r == "NA") {
+                const msg = "List with given id" + id + " not exist";
                 res.status(400);
-                res.send("List with given id not exist");
+                res.send(msg);
+                logger.error(msg);
                 return;
             }
-            else if(r=="Empty"){
+            else if (r == "Empty") {
+                const msg = "Name cannot be empty";
+                logger.error("Attempt to create list with empty name");
                 res.status(400);
-                res.send("Name cannot be empty");
+                res.send(msg);
                 return;
             }
             res.send(r);
