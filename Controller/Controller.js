@@ -8,6 +8,7 @@ var getAllTodoLists = function (req, res) {
     var listDaoObj = new listDao_1.listDao();
     listDaoObj.getAllList().then(function (r) {
         console.log(r);
+        res.status(200);
         res.send(JSON.stringify(r));
     });
 };
@@ -22,7 +23,10 @@ var getTodoListById = function (req, res) {
             res.send(msg);
             return;
         }
-        res.send(JSON.stringify(r));
+        else {
+            res.status(200);
+            res.send(JSON.stringify(r));
+        }
     });
 };
 exports.getTodoListById = getTodoListById;
@@ -32,28 +36,29 @@ var createNewTodoList = function (req, res) {
     var todoListObj = new TodoList_1.ToDoList(id, name);
     var listDaoObj = new listDao_1.listDao();
     listDaoObj.create(todoListObj).then(function (r) {
-        if (r == "Empty") {
-            var msg = "Name cannot be empty";
-            logger_1.logger.error("Attempt to create list with empty name");
-            res.status(400);
-            res.send(msg);
-            return;
+        switch (r) {
+            case "Empty":
+                logger_1.logger.error("Attempt to create list with empty name");
+                res.status(400);
+                res.send("Name cannot be empty");
+                return;
+            case "Duplicate":
+                var msgDuplicateName = "Name" + name + "already exists";
+                logger_1.logger.error(msgDuplicateName);
+                res.status(400);
+                res.send(msgDuplicateName);
+                return;
+            case "Duplicate id":
+                var msgDuplicateId = "Id" + id + "already exists";
+                logger_1.logger.error(msgDuplicateId);
+                res.status(400);
+                res.send(msgDuplicateId);
+                return;
+            default:
+                res.status(201);
+                res.send(r);
+                break;
         }
-        else if (r == "Duplicate") {
-            var msg = "Name" + name + "already exists";
-            logger_1.logger.error(msg);
-            res.status(400);
-            res.send(msg);
-            return;
-        }
-        else if (r == "Duplicate id") {
-            var msg = "Id" + id + "already exists";
-            logger_1.logger.error(msg);
-            res.status(400);
-            res.send(msg);
-            return;
-        }
-        res.status(201).send(r);
     });
 };
 exports.createNewTodoList = createNewTodoList;
@@ -67,7 +72,8 @@ var deleteTodoListById = function (req, res) {
             res.send(msg);
             return;
         }
-        res.send(r);
+        else
+            res.send(r);
     });
 };
 exports.deleteTodoListById = deleteTodoListById;
@@ -77,21 +83,23 @@ var updateTodoList = function (req, res) {
     var todoListObj = new TodoList_1.ToDoList(id, name);
     var listDaoObj = new listDao_1.listDao();
     listDaoObj.edit(todoListObj).then(function (r) {
-        if (r == "NA") {
-            var msg = "List with given id" + id + " not exist";
-            res.status(400);
-            res.send(msg);
-            logger_1.logger.error(msg);
-            return;
+        switch (r) {
+            case "NA":
+                var msgNA = "List with given id" + id + " not exist";
+                res.status(400);
+                res.send(msgNA);
+                logger_1.logger.error(msgNA);
+                return;
+            case "Empty":
+                var msgEmpty = "Name cannot be empty";
+                logger_1.logger.error("Attempt to create list with empty name");
+                res.status(400);
+                res.send(msgEmpty);
+                return;
+            default:
+                res.send(r);
+                break;
         }
-        else if (r == "Empty") {
-            var msg = "Name cannot be empty";
-            logger_1.logger.error("Attempt to create list with empty name");
-            res.status(400);
-            res.send(msg);
-            return;
-        }
-        res.send(r);
     });
 };
 exports.updateTodoList = updateTodoList;

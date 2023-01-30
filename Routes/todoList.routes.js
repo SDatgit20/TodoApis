@@ -3,9 +3,9 @@ exports.__esModule = true;
 var express = require('express');
 var router = express.Router();
 var Controller_1 = require("../Controller/Controller");
-router.get('/', Controller_1.getAllTodoLists); //localhost:3000/todolist/
-router.get('/:listid', Controller_1.getTodoListById); //localhost:3000/todolist/1
-router.post('/add', Controller_1.createNewTodoList); //localhost:3000/todolist/add
-router.put('/edit', Controller_1.updateTodoList); //localhost:3000/todolist/edit
-router["delete"]('/:listid', Controller_1.deleteTodoListById); //localhost:3000/todolist/1
+router.get('/', Controller_1.getAllTodoLists);
+router.get('/:listid', Controller_1.getTodoListById);
+router.post('/add', Controller_1.createNewTodoList);
+router.put('/edit', Controller_1.updateTodoList);
+router["delete"]('/:listid', Controller_1.deleteTodoListById);
 exports["default"] = router;
