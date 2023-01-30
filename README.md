@@ -8,7 +8,7 @@ This is a node js based application which helps the user to organize their tasks
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/SDatgit20/TodoListAndTaskManager.git
 ```
 
 Go to the project directory
