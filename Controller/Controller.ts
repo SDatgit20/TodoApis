@@ -5,7 +5,7 @@ import { logger } from "../Logger/logger";
 export const getAllTodoLists = (req, res) => {
     const listDaoObj = new listDao();
     listDaoObj.getAllList().then((r) => {
-        console.log(r);
+        logger.info(r);
         res.status(200);
         res.send(JSON.stringify(r));
     })
@@ -31,7 +31,7 @@ export const getTodoListById = (req, res) => {
 export const createNewTodoList = (req, res) => {
     const id = req.body.id;
     const name = req.body.name;
-    var todoListObj = new ToDoList(id, name);
+    const todoListObj = new ToDoList(id, name);
     const listDaoObj = new listDao();
     listDaoObj.create(todoListObj).then((r) => {
         switch (r) {
@@ -78,7 +78,7 @@ export const deleteTodoListById = (req, res) => {
 export const updateTodoList = (req, res) => {
     const id = req.body.id;
     const name = req.body.name;
-    var todoListObj = new ToDoList(id, name);
+    const todoListObj = new ToDoList(id, name);
     const listDaoObj = new listDao();
     listDaoObj.edit(todoListObj).then((r) => {
         switch (r) {

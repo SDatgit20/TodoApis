@@ -5,7 +5,7 @@ import { logger } from "../Logger/logger";
 export const getTasksByListId = (req, res) => {
     const taskDaoObj = new taskDao();
     taskDaoObj.getTodoByListId(req.params.listid).then((r) => {
-        console.log(r);
+        logger.info(r);
         res.send(JSON.stringify(r));
     })
 };
@@ -14,7 +14,7 @@ export const getTasksByListId = (req, res) => {
 export const getTasksByTaskId = (req, res) => {
     const taskDaoObj = new taskDao();
     taskDaoObj.getTodoById(req.params.taskid).then((r) => {
-        console.log(r);
+        logger.info(r);
         res.send(JSON.stringify(r));
     })
 };
@@ -22,7 +22,7 @@ export const getTasksByTaskId = (req, res) => {
 export const getAllPendingTasks = (req, res) => {
     const taskDaoObj = new taskDao();
     taskDaoObj.getAllPendingTasks().then((r) => {
-        console.log(r);
+        logger.info(r);
         res.send(JSON.stringify(r));
     })
 };
@@ -30,7 +30,7 @@ export const getAllPendingTasks = (req, res) => {
 export const getAllCompletedTasks = (req, res) => {
     const taskDaoObj = new taskDao();
     taskDaoObj.getAllCompletedTasks().then((r) => {
-        console.log(r);
+        logger.info(r);
         res.send(JSON.stringify(r));
     })
 };
@@ -38,6 +38,7 @@ export const getAllCompletedTasks = (req, res) => {
 export const toggleTaskStatusById = (req, res) => {
     const taskDaoObj = new taskDao();
     taskDaoObj.changeStatus(req.params.taskid).then((r) => {
+        logger.info(r);
         res.send("Status updated");
     })
 };
@@ -53,7 +54,7 @@ export const createNewTask = (req, res) => {
     const taskDaoObj = new taskDao();
     const description = req.body.description;
     const list_id = req.body.list_id;
-    var todoObj = new ToDoTask(description, list_id);
+    const todoObj = new ToDoTask(description, list_id);
     taskDaoObj.createTodo(todoObj).then((r) => {
         if (r == "Description empty") {
             const msg = "Name cannot be empty";
