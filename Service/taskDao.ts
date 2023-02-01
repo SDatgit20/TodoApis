@@ -46,10 +46,10 @@ export class taskDao {
     }
 
     public async getAllCompletedTasks() {
-        var query = "SELECT * from todotask where status like 'Completed' ";
+        const query = "SELECT * from todotask where status like 'Completed' ";
         logger.info(query);
         const now = await pool.query(query);
-        var arr: ToDoTask[] = now.rows;
+        const arr: ToDoTask[] = now.rows;
         return arr;
     }
 

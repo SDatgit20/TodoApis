@@ -5,11 +5,11 @@ import { getAllCompletedTasks, getAllPendingTasks, getTasksByTaskId, getTasksByL
 
 router.get('/:listid/tasks', getTasksByListId);
 router.get('/task/:taskid', getTasksByTaskId);
-router.get('/completedTask', getAllCompletedTasks);
-router.get('/pendingTasks', getAllPendingTasks);
-router.get('/toggleTask/:taskid', toggleTaskStatusById);
-router.post('/addTask', createNewTask);
-router.put('/editTask', editTask);
+router.get('/completed-tasks', getAllCompletedTasks);
+router.get('/pending-tasks', getAllPendingTasks);
+router.get('/toggle-task/:taskid', toggleTaskStatusById);
+router.post('/add-task', createNewTask);
+router.put('/edit-task', editTask);
 router.delete('/task/:taskid', deleteTaskById); 
 
 export default router;

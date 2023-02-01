@@ -5,8 +5,8 @@ import {getAllTodoLists, getTodoListById, createNewTodoList, updateTodoList, del
 
 router.get('/', getAllTodoLists); 
 router.get('/:listid',getTodoListById ); 
-router.post('/add', createNewTodoList);
-router.put('/edit', updateTodoList);
+router.post('/add-list', createNewTodoList);
+router.put('/edit-list', updateTodoList);
 router.delete('/:listid', deleteTodoListById);
 
 export default router;
