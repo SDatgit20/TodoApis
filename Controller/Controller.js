@@ -7,7 +7,7 @@ var logger_1 = require("../Logger/logger");
 var getAllTodoLists = function (req, res) {
     var listDaoObj = new listDao_1.listDao();
     listDaoObj.getAllList().then(function (r) {
-        console.log(r);
+        logger_1.logger.info(r);
         res.status(200);
         res.send(JSON.stringify(r));
     });
@@ -20,13 +20,11 @@ var getTodoListById = function (req, res) {
             var msg = "List not found for given id";
             logger_1.logger.error(msg + " " + req.params.listid);
             res.status(404);
-            res.send(msg);
+            res.json({ message: msg });
             return;
         }
-        else {
-            res.status(200);
-            res.send(JSON.stringify(r));
-        }
+        res.status(200);
+        res.send(JSON.stringify(r));
     });
 };
 exports.getTodoListById = getTodoListById;
@@ -65,15 +63,14 @@ exports.createNewTodoList = createNewTodoList;
 var deleteTodoListById = function (req, res) {
     var listDaoObj = new listDao_1.listDao();
     listDaoObj["delete"](req.params.listid).then(function (r) {
-        if (r == -1) {
+        if (r === -1) {
             var msg = "List not found for given id";
             logger_1.logger.error(msg + " " + req.params.listid);
             res.status(404);
             res.send(msg);
             return;
         }
-        else
-            res.send(r);
+        res.send(r);
     });
 };
 exports.deleteTodoListById = deleteTodoListById;
@@ -103,3 +100,10 @@ var updateTodoList = function (req, res) {
     });
 };
 exports.updateTodoList = updateTodoList;
+//JSON response- 4xx 5xx
+//no response in case of 201
+//ts lint or es lint
+//string template
+//const {id, name} = req.body destructuring
+// ++aysnc await vs .then
+// try queries with migrations

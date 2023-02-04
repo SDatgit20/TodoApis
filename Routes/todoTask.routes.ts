@@ -7,9 +7,10 @@ router.get('/:listid/tasks', getTasksByListId);
 router.get('/task/:taskid', getTasksByTaskId);
 router.get('/completed-tasks', getAllCompletedTasks);
 router.get('/pending-tasks', getAllPendingTasks);
-router.get('/toggle-task/:taskid', toggleTaskStatusById);
+router.get('/toggle-task/:taskid', toggleTaskStatusById); //patch
 router.post('/add-task', createNewTask);
 router.put('/edit-task', editTask);
-router.delete('/task/:taskid', deleteTaskById); 
+router.delete('/task/:taskid', deleteTaskById);
 
 export default router;
+

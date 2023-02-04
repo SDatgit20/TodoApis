@@ -18,13 +18,11 @@ export const getTodoListById = (req, res) => {
             const msg = "List not found for given id";
             logger.error(msg + " " + req.params.listid);
             res.status(404);
-            res.send(msg);
+            res.json({message:msg});
             return;
         }
-        else {
             res.status(200);
             res.send(JSON.stringify(r));
-        }
     })
 };
 
@@ -44,13 +42,13 @@ export const createNewTodoList = (req, res) => {
                 const msgDuplicateName = "Name" + name + "already exists";
                 logger.error(msgDuplicateName);
                 res.status(400);
-                res.send(msgDuplicateName);
+                res.json({message:msgDuplicateName});
                 return;
             case "Duplicate id":
                 const msgDuplicateId = "Id" + id + "already exists";
                 logger.error(msgDuplicateId);
                 res.status(400);
-                res.send(msgDuplicateId);
+                res.json({message:msgDuplicateId});
                 return;
             default:
                 res.status(201);
@@ -63,14 +61,13 @@ export const createNewTodoList = (req, res) => {
 export const deleteTodoListById = (req, res) => {
     const listDaoObj = new listDao();
     listDaoObj.delete(req.params.listid).then((r) => {
-        if (r == -1) {
+        if (r === -1) {
             const msg = "List not found for given id";
             logger.error(msg + " " + req.params.listid);
             res.status(404);
-            res.send(msg);
+            res.json({message:msg});
             return;
         }
-        else
             res.send(r);
     })
 };
@@ -85,14 +82,14 @@ export const updateTodoList = (req, res) => {
             case "NA":
                 const msgNA = "List with given id" + id + " not exist";
                 res.status(400);
-                res.send(msgNA);
+                res.json({message:msgNA});
                 logger.error(msgNA);
                 return;
             case "Empty":
                 const msgEmpty = "Name cannot be empty";
                 logger.error("Attempt to create list with empty name");
                 res.status(400);
-                res.send(msgEmpty);
+                res.json({message:msgEmpty});
                 return;
             default:
                 res.send(r);
@@ -100,3 +97,11 @@ export const updateTodoList = (req, res) => {
         }
     });
 };
+
+//JSON response- 4xx 5xx
+//no response in case of 201
+//ts lint or es lint
+//string template
+//const {id, name} = req.body destructuring
+// ++aysnc await vs .then
+// try queries with migrations

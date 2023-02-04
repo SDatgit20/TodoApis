@@ -7,7 +7,7 @@ var logger_1 = require("../Logger/logger");
 var getTasksByListId = function (req, res) {
     var taskDaoObj = new taskDao_1.taskDao();
     taskDaoObj.getTodoByListId(req.params.listid).then(function (r) {
-        console.log(r);
+        logger_1.logger.info(r);
         res.send(JSON.stringify(r));
     });
 };
@@ -15,7 +15,7 @@ exports.getTasksByListId = getTasksByListId;
 var getTasksByTaskId = function (req, res) {
     var taskDaoObj = new taskDao_1.taskDao();
     taskDaoObj.getTodoById(req.params.taskid).then(function (r) {
-        console.log(r);
+        logger_1.logger.info(r);
         res.send(JSON.stringify(r));
     });
 };
@@ -23,7 +23,7 @@ exports.getTasksByTaskId = getTasksByTaskId;
 var getAllPendingTasks = function (req, res) {
     var taskDaoObj = new taskDao_1.taskDao();
     taskDaoObj.getAllPendingTasks().then(function (r) {
-        console.log(r);
+        logger_1.logger.info(r);
         res.send(JSON.stringify(r));
     });
 };
@@ -31,7 +31,7 @@ exports.getAllPendingTasks = getAllPendingTasks;
 var getAllCompletedTasks = function (req, res) {
     var taskDaoObj = new taskDao_1.taskDao();
     taskDaoObj.getAllCompletedTasks().then(function (r) {
-        console.log(r);
+        logger_1.logger.info(r);
         res.send(JSON.stringify(r));
     });
 };
@@ -39,6 +39,7 @@ exports.getAllCompletedTasks = getAllCompletedTasks;
 var toggleTaskStatusById = function (req, res) {
     var taskDaoObj = new taskDao_1.taskDao();
     taskDaoObj.changeStatus(req.params.taskid).then(function (r) {
+        logger_1.logger.info(r);
         res.send("Status updated");
     });
 };

@@ -71,7 +71,9 @@ describe('List Controller tests', () => {
                 params:
                     { listid: 1 }
             };
+
             getTodoListById(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(404);
@@ -91,7 +93,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             createNewTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(400);
@@ -111,7 +115,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             createNewTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(400);
@@ -131,7 +137,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             createNewTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(400);
@@ -151,7 +159,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             createNewTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(201);
@@ -172,7 +182,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             updateTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.send.firstCall.args[0]).to.equal("List edited");
@@ -190,7 +202,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             updateTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(400);
@@ -210,7 +224,9 @@ describe('List Controller tests', () => {
                     name: "hello"
                 }
             };
+
             updateTodoList(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(400);
@@ -229,7 +245,9 @@ describe('List Controller tests', () => {
                 params:
                     { listid: 1 }
             };
+
             deleteTodoListById(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.status.firstCall.args[0]).to.equal(404);
@@ -246,7 +264,9 @@ describe('List Controller tests', () => {
                 params:
                     { listid: 1 }
             };
+
             deleteTodoListById(req, res);
+
             return new Promise(resolve => {
                 setTimeout(() => {
                     expect(res.send.firstCall.args[0]).to.equal("List deleted");

@@ -108,7 +108,7 @@ describe("List Service Unit Tests", function () {
         it("should give list when id is given", async function () {
             const id = 1;
             const listDaoObj = new listDao();
-            const postgreeStubQuery = sinon.stub(pgPool.prototype, 'query').returns({ rows: [{"id":1,"name":"Code"}] });
+            const postgreeStubQuery = sinon.stub(pgPool.prototype, 'query').returns({ rows: [{ "id": 1, "name": "Code" }] });
 
             const returnedUser = await listDaoObj.getListById(id);
 
@@ -118,7 +118,7 @@ describe("List Service Unit Tests", function () {
 
         it("should give all lists when number of lists is greater than zero", async function () {
             const listDaoObj = new listDao();
-            const postgreeStubQuery = sinon.stub(pgPool.prototype, 'query').returns({ rows: [{"id":1,"name":"Code"}] });
+            const postgreeStubQuery = sinon.stub(pgPool.prototype, 'query').returns({ rows: [{ "id": 1, "name": "Code" }] });
 
             const returnedUser = await listDaoObj.getAllList();
 

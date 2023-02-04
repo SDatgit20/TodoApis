@@ -60,7 +60,7 @@ export const createNewTask = (req, res) => {
             const msg = "Name cannot be empty";
             logger.error("Attempt to create list with empty name");
             res.status(400);
-            res.send(msg);
+            res.json({message:msg});
             return;
         }
         res.status(201).send("Task added: " + description);
